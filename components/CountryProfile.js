@@ -1,36 +1,4 @@
-const data = [
-    {
-        "taste": "fruity",
-        "chardonay": 75,
-        "carmenere": 38,
-        "syrah": 27
-    },
-    {
-        "taste": "bitter",
-        "chardonay": 110,
-        "carmenere": 99,
-        "syrah": 73
-    },
-    {
-        "taste": "heavy",
-        "chardonay": 83,
-        "carmenere": 78,
-        "syrah": 70
-    },
-    {
-        "taste": "strong",
-        "chardonay": 69,
-        "carmenere": 69,
-        "syrah": 43
-    },
-    {
-        "taste": "sunny",
-        "chardonay": 110,
-        "carmenere": 96,
-        "syrah": 89
-    }
-]
-
+import CountryController from '../controller/CountryController';
 import { ResponsiveRadar } from '@nivo/radar'
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -38,11 +6,13 @@ import { ResponsiveRadar } from '@nivo/radar'
 // website examples showcase many properties,
 // you'll often use just a few of them.
 
-export const CountryProfile = () => (
+const { getKeysByYear, getCountryKey, formatData } = CountryController;
+
+export const CountryProfile = ({ data, country, year }) => (
     <ResponsiveRadar
         data={data}
-        keys={['chardonay', 'carmenere', 'syrah']}
-        indexBy="taste"
+        indexBy={'selectedProp'}
+        keys={[country]}
         maxValue="auto"
         margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
         curve="linearClosed"

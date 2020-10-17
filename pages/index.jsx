@@ -23,7 +23,7 @@ import {
 import CountryController from "../controller/CountryController";
 import { CountryProfile } from "../components/CountryProfile";
 
-const { getAllCountries, getCountryOptions } = CountryController;
+const { getAllCountries, getCountryOptions, formatData } = CountryController;
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -211,7 +211,8 @@ const HomepageLayout = () => {
     setYear(year);
     setCountries(getAllCountries(year));
   };
-  console.log("getCountryOptions(countries)", getCountryOptions(countries));
+
+  console.log("formatData", formatData(country, year));
   return (
     <ResponsiveContainer>
       <Segment style={{ padding: "8em 0em" }} vertical>
@@ -239,7 +240,7 @@ const HomepageLayout = () => {
                 search
                 selection
                 onChange={(evt, { value }) => setCountry(value)}
-                options={getCountryOptions(countries)}
+                options={getCountryOptions(countries, year)}
                 value={country}
               />
             </Grid.Column>
@@ -248,7 +249,11 @@ const HomepageLayout = () => {
                 <Header style={{ textAlign: "center" }} as="h2">
                   {country}
                 </Header>
-                <CountryProfile />
+                <CountryProfile
+                  data={formatData(country, year)}
+                  country={country}
+                  year={year}
+                />
               </div>
             </Grid.Column>
           </Grid.Row>
