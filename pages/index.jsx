@@ -111,10 +111,12 @@ class DesktopContainer extends Component {
                 <Menu.Item as="a" active>
                   Home
                 </Menu.Item>
+                <Menu.Item as="a" href="/all">
+                  All Rankings
+                </Menu.Item>
                 <Menu.Item as="a">Health + Wealth</Menu.Item>
                 <Menu.Item as="a">Love + Money</Menu.Item>
                 <Menu.Item as="a">Race To The Bottom</Menu.Item>
-                <Menu.Item as="a">All Rankings</Menu.Item>
               </Container>
             </Menu>
             <HomepageHeading />
@@ -156,10 +158,12 @@ class MobileContainer extends Component {
             <Menu.Item as="a" active>
               Home
             </Menu.Item>
+            <Menu.Item as="a" href="/all">
+              All Rankings
+            </Menu.Item>
             <Menu.Item as="a">Health + Wealth</Menu.Item>
             <Menu.Item as="a">Love + Money</Menu.Item>
             <Menu.Item as="a">Race To The Bottom</Menu.Item>
-            <Menu.Item as="a">All Rankings</Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened}>
