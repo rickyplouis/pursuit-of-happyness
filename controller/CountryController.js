@@ -61,28 +61,61 @@ const CountryController = {
         // console.log(array); 
         let index = res.indexOf(CountryController.getCountryKey(year));
         if (index > -1) {
-            console.log('res', res);
-            // remove "Country or Region || Country" from keys
             res.splice(index, 1);
-            // remove "Overall Rank" from keys
-            res.splice(res.indexOf('Overall rank'), 1);
-            // remove "Score" from keys
-            res.splice(res.indexOf('Score'), 1);
-            res.splice(res.indexOf('Region'), 1);
+        }
+
+        // remove the following keys for cleaner radar chart
+        const removeableKeys = ['Overall rank',
+            'Score',
+            "Happiness.Score",
+            "Happiness.Rank",
+            "Region",
+            "Happiness Rank",
+            "Happiness Score",
+            "Lower Confidence Interval",
+            "Upper Confidence Interval",
+            "Dystopia Residual",
+            "Whisker.high",
+            "Whisker.low",
+            "Dystopia.Residual",
+            "Standard Error"
+        ]
+        for (let key of removeableKeys) {
+            let index = res.indexOf(key);
+            if (index !== -1) {
+                res.splice(index, 1);
+            }
         }
         console.log('getKeysByYear', res)
         return res;
     },
-    formatData(country, year) {
+    getCountry(country, year) {
         let countries = CountryController.getAllCountries(year);
         let countryKey = CountryController.getCountryKey(year);
-        let res = countries.filter(item => item[countryKey] === country);
+        return countries.filter(item => item[countryKey] === country);
+    },
+    formatData(country, year) {
+        let res = CountryController.getCountry(country, year);
         const [selectedCountry] = res;
         const keys = CountryController.getKeysByYear(year);
         let data = keys.map((key) => Object.assign({ selectedProp: key, [country]: +(selectedCountry[key]).toFixed(2) }));
-        console.log('data', data);
         return data;
+    },
+    getHappinessKey(year) {
+        if (year === '2015' || year === '2016') {
+            return "Happiness Rank";
+        }
+        if (year === "2017") {
+            return "Happiness.Rank";
+        }
+        return "Overall rank"
+    },
+    getRank(country, year) {
+        let selectedCountry = CountryController.getCountry(country, year);
+        console.log('selectedCountry', selectedCountry);
+        return selectedCountry[0][CountryController.getHappinessKey(year)];
     }
+
 }
 
 module.exports = CountryController;
@@ -157,12 +190,6 @@ module.exports = CountryController;
 //     "Perceptions of corruption": 0.393
 //   },
 
-
-// {
-
-//     selectedProp: "GDP",
-//     GDP: 
-// }
 
 // Sample Data
 // const data = [

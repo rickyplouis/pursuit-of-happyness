@@ -23,7 +23,13 @@ import {
 import CountryController from "../controller/CountryController";
 import { CountryProfile } from "../components/CountryProfile";
 
-const { getAllCountries, getCountryOptions, formatData } = CountryController;
+const {
+  getAllCountries,
+  getCountryOptions,
+  formatData,
+  getCountry,
+  getRank,
+} = CountryController;
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -105,9 +111,10 @@ class DesktopContainer extends Component {
                 <Menu.Item as="a" active>
                   Home
                 </Menu.Item>
-                <Menu.Item as="a">Work</Menu.Item>
-                <Menu.Item as="a">Company</Menu.Item>
-                <Menu.Item as="a">Careers</Menu.Item>
+                <Menu.Item as="a">Health + Wealth</Menu.Item>
+                <Menu.Item as="a">Love + Money</Menu.Item>
+                <Menu.Item as="a">Race To The Bottom</Menu.Item>
+                <Menu.Item as="a">All Rankings</Menu.Item>
               </Container>
             </Menu>
             <HomepageHeading />
@@ -149,9 +156,10 @@ class MobileContainer extends Component {
             <Menu.Item as="a" active>
               Home
             </Menu.Item>
-            <Menu.Item as="a">Work</Menu.Item>
-            <Menu.Item as="a">Company</Menu.Item>
-            <Menu.Item as="a">Careers</Menu.Item>
+            <Menu.Item as="a">Health + Wealth</Menu.Item>
+            <Menu.Item as="a">Love + Money</Menu.Item>
+            <Menu.Item as="a">Race To The Bottom</Menu.Item>
+            <Menu.Item as="a">All Rankings</Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened}>
@@ -211,8 +219,6 @@ const HomepageLayout = () => {
     setYear(year);
     setCountries(getAllCountries(year));
   };
-
-  console.log("formatData", formatData(country, year));
   return (
     <ResponsiveContainer>
       <Segment style={{ padding: "8em 0em" }} vertical>
@@ -248,6 +254,9 @@ const HomepageLayout = () => {
               <div style={{ height: "40vh", width: "50vw" }}>
                 <Header style={{ textAlign: "center" }} as="h2">
                   {country}
+                  <Header.Subheader>
+                    Ranked: {getRank(country, year)} overall
+                  </Header.Subheader>
                 </Header>
                 <CountryProfile
                   data={formatData(country, year)}
